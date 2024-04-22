@@ -1,0 +1,45 @@
+:tilde: ~
+:author: Josh Long
+:email:  josh@joshlong.com
+:revnumber: 1.0
+:revdate: {docdate}
+:revyear: 2023
+:keywords: the Spring Authorization Serer
+:doctype: book
+:media: screen
+ifeval::["{media}" != "prepress"]
+:front-cover-image: image:cover.png[Front Cover,1050,1600]
+endif::[]
+:toc:
+:toc-placement: macro
+:icons: font
+:lang: en
+:language: javadocript
+:experimental:
+:pdf-fontsdir: ./styles/pdf/fonts
+:pdf-stylesdir: ./styles/pdf
+:pdf-style: screen
+:leveloffset: 1
+// ifndef::ebook-format[:leveloffset: 1]
+toc::[]
+:sectnums!:
+[frontmatter]
+
+include::frontmatter.adoc[]
+
+= The Spring Authorization Server
+include::oauth.adoc[]
+include::authorization-service.adoc[]
+include::persistence.adoc[]
+include::federated-oauth.adoc[]
+
+= OAuth all the Things
+
+include::resource-service.adoc[]
+include::gateway-service.adoc[]
+include::processor.adoc[]
+
+[appendix]
+= Appendix
+
+include::java.adoc[]

@@ -1,0 +1,13 @@
+logging:
+  level:
+    root: info
+    web: debug
+    dev.hobie.processor: debug
+spring:
+  rabbitmq:
+    password: password
+    username: user
+  security:
+    oauth2:
+      authorizationserver:
+        issuer: http://localhost:8080

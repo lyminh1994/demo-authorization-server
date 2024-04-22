@@ -1,0 +1,22 @@
+jwt:
+  key:
+    id: bootiful-key
+  persistence:
+    password: password
+    salt: 626F6F746966756C
+logging:
+  level:
+    root: info
+    web: debug
+    dev.hobie.authorizationservice: debug
+spring:
+  codec:
+    log-request-details: true
+  datasource:
+    password: postgres
+    url: jdbc:postgresql://localhost/postgres
+    username: postgres
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/schema/*sql

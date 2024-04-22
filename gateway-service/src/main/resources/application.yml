@@ -1,0 +1,23 @@
+logging:
+  level:
+    root: info
+    web: debug
+    dev.hobie.oauthclient: debug
+server:
+  port: 8082 # <1>
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          spring:
+            issuer-uri: http://localhost:8080 # <2>
+        registration: # <3>
+          spring:
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_basic
+            client-id: crm
+            client-secret: crm
+            provider: spring
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope: user.read,openid
