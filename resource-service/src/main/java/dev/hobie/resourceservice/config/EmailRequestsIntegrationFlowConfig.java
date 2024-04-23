@@ -1,4 +1,4 @@
-package dev.hobie.resourceservice;
+package dev.hobie.resourceservice.config;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.integration.json.ObjectToJsonTransformer;
 import org.springframework.messaging.MessageChannel;
 
 @Configuration
-public class EmailRequestsIntegrationFlowConfiguration {
+public class EmailRequestsIntegrationFlowConfig {
 
   @Bean
   public IntegrationFlow emailRequestsIntegrationFlow(

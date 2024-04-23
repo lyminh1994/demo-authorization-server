@@ -1,5 +1,6 @@
-package dev.hobie.resourceservice;
+package dev.hobie.resourceservice.controller;
 
+import dev.hobie.resourceservice.repository.CustomerRepository;
 import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
@@ -7,10 +8,8 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

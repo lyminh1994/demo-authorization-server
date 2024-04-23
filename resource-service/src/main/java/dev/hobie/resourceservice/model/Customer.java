@@ -1,4 +1,4 @@
-package dev.hobie.resourceservice;
+package dev.hobie.resourceservice.model;
 
 import org.springframework.data.annotation.Id;
 

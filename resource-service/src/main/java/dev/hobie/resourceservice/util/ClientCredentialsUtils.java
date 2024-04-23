@@ -1,4 +1,4 @@
-package dev.hobie.resourceservice;
+package dev.hobie.resourceservice.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.experimental.UtilityClass;
@@ -10,7 +10,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @UtilityClass
-public class ClientCredentialsClient {
+public class ClientCredentialsUtils {
 
   public String getJwtToken(RestTemplate restTemplate, String clientId, String clientSecret) {
     var headers = new HttpHeaders();
