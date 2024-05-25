@@ -1,5 +1,7 @@
 package dev.hobie.authorizationservice.keys;
 
+import dev.hobie.authorizationservice.repository.RsaKeyPairRepository;
+import dev.hobie.authorizationservice.utils.KeyUtils;
 import java.time.Instant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -11,13 +13,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LifecycleConfiguration {
 
-  @Bean // <1>
+  @Bean
   public ApplicationListener<RsaKeyPairGenerationRequestEvent> keyPairGenerationRequestListener(
-      Keys keys, RsaKeyPairRepository repository, @Value("${jwt.key.id}") String keyId) {
-    return event -> repository.save(keys.generateKeyPair(keyId, event.getSource()));
+      RsaKeyPairRepository repository, @Value("${jwt.key.id}") String keyId) {
+    return event -> repository.save(KeyUtils.generateKeyPair(keyId, event.getSource()));
   }
 
-  @Bean // <2>
+  @Bean
   public ApplicationListener<ApplicationReadyEvent> applicationReadyListener(
       ApplicationEventPublisher publisher, RsaKeyPairRepository repository) {
     return event -> {

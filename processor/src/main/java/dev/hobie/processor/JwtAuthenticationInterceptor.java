@@ -15,25 +15,25 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor
 public class JwtAuthenticationInterceptor implements ChannelInterceptor {
 
-  private final JwtAuthenticationProvider authenticationProvider; // <1>
+  private final JwtAuthenticationProvider authenticationProvider;
 
-  private final String headerName; // <2>
+  private final String headerName;
 
   @Override
   public Message<?> preSend(Message<?> message, @NonNull MessageChannel channel) {
-    var token = (String) message.getHeaders().get(headerName); // <3>
+    var token = (String) message.getHeaders().get(headerName);
     Assert.hasText(token, "the token must be non-empty!");
 
     var authentication =
-        this.authenticationProvider.authenticate(new BearerTokenAuthenticationToken(token)); // <4>
+        this.authenticationProvider.authenticate(new BearerTokenAuthenticationToken(token));
 
-    if (authentication != null && authentication.isAuthenticated()) { // <5>
+    if (authentication != null && authentication.isAuthenticated()) {
       var upt =
           UsernamePasswordAuthenticationToken.authenticated(
               authentication.getName(), null, AuthorityUtils.NO_AUTHORITIES);
       return MessageBuilder.fromMessage(message).setHeader(headerName, upt).build();
     }
 
-    return MessageBuilder.fromMessage(message).setHeader(headerName, null).build(); // <6>
+    return MessageBuilder.fromMessage(message).setHeader(headerName, null).build();
   }
 }

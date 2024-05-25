@@ -15,14 +15,14 @@ import org.springframework.security.oauth2.server.authorization.token.*;
 @Configuration
 public class KeyConfiguration {
 
-  @Bean // <1>
+  @Bean
   public TextEncryptor textEncryptor(
       @Value("${jwt.persistence.password}") String pw,
       @Value("${jwt.persistence.salt}") String salt) {
     return Encryptors.text(pw, salt);
   }
 
-  @Bean // <2>
+  @Bean
   public OAuth2TokenGenerator<OAuth2Token> delegatingOAuth2TokenGenerator(
       JwtEncoder encoder, OAuth2TokenCustomizer<JwtEncodingContext> customizer) {
     var generator = new JwtGenerator(encoder);
@@ -31,7 +31,7 @@ public class KeyConfiguration {
         generator, new OAuth2AccessTokenGenerator(), new OAuth2RefreshTokenGenerator());
   }
 
-  @Bean // <3>
+  @Bean
   public NimbusJwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
     return new NimbusJwtEncoder(jwkSource);
   }

@@ -17,11 +17,11 @@ public class EmailRequestsIntegrationFlowConfig {
   public IntegrationFlow emailRequestsIntegrationFlow(
       MessageChannel requests, AmqpTemplate template) {
     String destinationName = "emails";
-    var outboundAmqpAdapter = Amqp.outboundAdapter(template).routingKey(destinationName); // <1>
+    var outboundAmqpAdapter = Amqp.outboundAdapter(template).routingKey(destinationName);
 
-    return IntegrationFlow.from(requests) // <2>
-        .transform(new ObjectToJsonTransformer()) // <3>
-        .handle(outboundAmqpAdapter) // <4>
+    return IntegrationFlow.from(requests)
+        .transform(new ObjectToJsonTransformer())
+        .handle(outboundAmqpAdapter)
         .get();
   }
 

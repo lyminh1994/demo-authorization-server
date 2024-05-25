@@ -23,7 +23,7 @@ public class RsaPrivateKeyConverter
 
   private final TextEncryptor textEncryptor;
 
-  @Override // <1>
+  @Override
   public void serialize(RSAPrivateKey object, OutputStream outputStream) throws IOException {
     var pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(object.getEncoded());
     var string =
@@ -34,7 +34,7 @@ public class RsaPrivateKeyConverter
   }
 
   @NonNull
-  @Override // <2>
+  @Override
   public RSAPrivateKey deserialize(@NonNull InputStream inputStream) {
     try {
       var pem =

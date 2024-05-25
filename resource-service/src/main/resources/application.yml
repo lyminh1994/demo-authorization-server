@@ -1,23 +1,25 @@
 logging:
   level:
     root: info
-    web: debug
+    web: trace
     dev.hobie.resourceservice: debug
 server:
-  port: 8081 # <4>
+  port: 8081
 spring:
-  datasource: # <3>
+  codec:
+    log-request-details: true
+  datasource:
     password: postgres
     url: jdbc:postgresql://localhost/postgres
     username: postgres
-  rabbitmq: # <2>
+  rabbitmq:
     password: password
     username: user
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080 # <1>
+          issuer-uri: http://localhost:8080
   sql:
     init:
       mode: always

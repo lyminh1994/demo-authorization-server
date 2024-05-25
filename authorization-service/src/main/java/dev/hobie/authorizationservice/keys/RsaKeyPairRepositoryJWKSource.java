@@ -5,23 +5,22 @@ import com.nimbusds.jose.jwk.JWKSelector;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import dev.hobie.authorizationservice.repository.RsaKeyPairRepository;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class RsaKeyPairRepositoryJWKSource
     implements JWKSource<SecurityContext>, OAuth2TokenCustomizer<JwtEncodingContext> {
 
   private final RsaKeyPairRepository keyPairRepository;
 
-  public RsaKeyPairRepositoryJWKSource(RsaKeyPairRepository keyPairRepository) {
-    this.keyPairRepository = keyPairRepository;
-  }
-
-  @Override // <1>
+  @Override
   public List<JWK> get(JWKSelector jwkSelector, SecurityContext context) {
     var keyPairs = this.keyPairRepository.findKeyPairs();
     var result = new ArrayList<JWK>(keyPairs.size());
@@ -38,10 +37,10 @@ public class RsaKeyPairRepositoryJWKSource
     return result;
   }
 
-  @Override // <2>
+  @Override
   public void customize(JwtEncodingContext context) {
     var keyPairs = this.keyPairRepository.findKeyPairs();
-    var kid = keyPairs.get(0).id();
+    var kid = keyPairs.getFirst().id();
     context.getJwsHeader().keyId(kid);
   }
 }

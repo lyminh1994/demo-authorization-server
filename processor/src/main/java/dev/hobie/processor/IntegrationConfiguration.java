@@ -18,7 +18,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 @Configuration
 public class IntegrationConfiguration {
 
-  @Bean // <1>
+  @Bean
   public IntegrationFlow inboundAmqpRequestsIntegrationFlow(
       @Qualifier(Constants.REQUESTS_MESSAGE_CHANNEL) MessageChannel requests,
       ConnectionFactory connectionFactory) {
@@ -27,7 +27,7 @@ public class IntegrationConfiguration {
     return IntegrationFlow.from(inboundAmqpAdapter).channel(requests).get();
   }
 
-  @Bean // <2>
+  @Bean
   public IntegrationFlow requestsIntegrationFlow(
       @Qualifier(Constants.REQUESTS_MESSAGE_CHANNEL) MessageChannel requests) {
 
@@ -43,15 +43,15 @@ public class IntegrationConfiguration {
         .get();
   }
 
-  @Bean(Constants.REQUESTS_MESSAGE_CHANNEL) // <3>
+  @Bean(Constants.REQUESTS_MESSAGE_CHANNEL)
   public DirectChannelSpec requests(JwtAuthenticationProvider jwtAuthenticationProvider) {
     var jwtAuthInterceptor =
         new JwtAuthenticationInterceptor(
-            jwtAuthenticationProvider, Constants.AUTHORIZATION_HEADER_NAME); // <4>
+            jwtAuthenticationProvider, Constants.AUTHORIZATION_HEADER_NAME);
     var securityContextChannelInterceptor =
-        new SecurityContextChannelInterceptor(Constants.AUTHORIZATION_HEADER_NAME); // <5>
+        new SecurityContextChannelInterceptor(Constants.AUTHORIZATION_HEADER_NAME);
     var authorizationChannelInterceptor =
-        new AuthorizationChannelInterceptor(AuthenticatedAuthorizationManager.authenticated()); // <6>
+        new AuthorizationChannelInterceptor(AuthenticatedAuthorizationManager.authenticated());
     return MessageChannels.direct()
         .interceptor(
             jwtAuthInterceptor, securityContextChannelInterceptor, authorizationChannelInterceptor);

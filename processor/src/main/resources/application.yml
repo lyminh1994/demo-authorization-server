@@ -1,7 +1,7 @@
 logging:
   level:
     root: info
-    web: debug
+    web: trace
     dev.hobie.processor: debug
 spring:
   rabbitmq:
