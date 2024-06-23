@@ -2,14 +2,14 @@ logging:
   level:
     root: info
     web: debug
-    dev.hobie.resourceservice: debug
+    dev.hobie.resource_service: debug
 server:
   port: 8081 # <4>
 spring:
   datasource: # <3>
-    password: postgres
-    url: jdbc:postgresql://localhost/postgres
-    username: postgres
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: myuser
+    password: secret
   rabbitmq: # <2>
     password: password
     username: user

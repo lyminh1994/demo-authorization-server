@@ -1,4 +1,4 @@
-package bootiful.authorizationserver;
+package dev.hobie.authorizationservice;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package bootiful.authorizationserver.keys;
+package dev.hobie.authorizationservice.keys;
 
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;

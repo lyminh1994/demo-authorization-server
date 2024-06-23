@@ -18,17 +18,18 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 @Configuration
 public class IntegrationConfiguration {
 
-  @Bean // <1>
-  public IntegrationFlow inboundAmqpRequestsIntegrationFlow(
+  // <1>
+  @Bean
+  IntegrationFlow inboundAmqpRequestsIntegrationFlow(
       @Qualifier(Constants.REQUESTS_MESSAGE_CHANNEL) MessageChannel requests,
       ConnectionFactory connectionFactory) {
-    var inboundAmqpAdapter =
-        Amqp.inboundAdapter(connectionFactory, Constants.RABBITMQ_DESTINATION_NAME);
+    var inboundAmqpAdapter = Amqp.inboundAdapter(connectionFactory, Constants.RABBITMQ_DESTINATION_NAME);
     return IntegrationFlow.from(inboundAmqpAdapter).channel(requests).get();
   }
 
-  @Bean // <2>
-  public IntegrationFlow requestsIntegrationFlow(
+  // <2>
+  @Bean
+  IntegrationFlow requestsIntegrationFlow(
       @Qualifier(Constants.REQUESTS_MESSAGE_CHANNEL) MessageChannel requests) {
 
     var log = LoggerFactory.getLogger(getClass());
@@ -43,15 +44,14 @@ public class IntegrationConfiguration {
         .get();
   }
 
-  @Bean(Constants.REQUESTS_MESSAGE_CHANNEL) // <3>
-  public DirectChannelSpec requests(JwtAuthenticationProvider jwtAuthenticationProvider) {
-    var jwtAuthInterceptor =
-        new JwtAuthenticationInterceptor(
-            jwtAuthenticationProvider, Constants.AUTHORIZATION_HEADER_NAME); // <4>
-    var securityContextChannelInterceptor =
-        new SecurityContextChannelInterceptor(Constants.AUTHORIZATION_HEADER_NAME); // <5>
-    var authorizationChannelInterceptor =
-        new AuthorizationChannelInterceptor(AuthenticatedAuthorizationManager.authenticated()); // <6>
+  // <3>
+  @Bean(Constants.REQUESTS_MESSAGE_CHANNEL)
+  DirectChannelSpec requests(JwtAuthenticationProvider jwtAuthenticationProvider) {
+    var jwtAuthInterceptor = new JwtAuthenticationInterceptor(
+        jwtAuthenticationProvider, Constants.AUTHORIZATION_HEADER_NAME); // <4>
+    var securityContextChannelInterceptor = new SecurityContextChannelInterceptor(Constants.AUTHORIZATION_HEADER_NAME); // <5>
+    var authorizationChannelInterceptor = new AuthorizationChannelInterceptor(
+        AuthenticatedAuthorizationManager.authenticated()); // <6>
     return MessageChannels.direct()
         .interceptor(
             jwtAuthInterceptor, securityContextChannelInterceptor, authorizationChannelInterceptor);

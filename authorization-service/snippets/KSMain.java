@@ -1,4 +1,4 @@
-package bootiful.authorizationserver;
+package dev.hobie.authorizationservice;
 
 import javax.crypto.SecretKey;
 import java.io.FileInputStream;

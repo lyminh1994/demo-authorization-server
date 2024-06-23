@@ -13,17 +13,17 @@ import org.springframework.context.annotation.Configuration;
 public class AmqpConfiguration {
 
   @Bean
-  public Queue queue() {
+  Queue queue() {
     return QueueBuilder.durable(Constants.RABBITMQ_DESTINATION_NAME).build();
   }
 
   @Bean
-  public Exchange exchange() {
+  Exchange exchange() {
     return ExchangeBuilder.directExchange(Constants.RABBITMQ_DESTINATION_NAME).build();
   }
 
   @Bean
-  public Binding binding() {
+  Binding binding() {
     return BindingBuilder.bind(queue())
         .to(exchange())
         .with(Constants.RABBITMQ_DESTINATION_NAME)

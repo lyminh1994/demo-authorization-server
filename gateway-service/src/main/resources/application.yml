@@ -2,7 +2,7 @@ logging:
   level:
     root: info
     web: debug
-    dev.hobie.oauthclient: debug
+    dev.hobie.gateway_service: debug
 server:
   port: 8082 # <1>
 spring:

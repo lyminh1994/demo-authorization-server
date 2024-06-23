@@ -6,16 +6,16 @@ jwt:
     salt: 626F6F746966756C
 logging:
   level:
-    root: info
+    root: debug
     web: debug
-    dev.hobie.authorizationservice: debug
+    dev.hobie.authorization_service: debug
 spring:
   codec:
     log-request-details: true
   datasource:
-    password: postgres
-    url: jdbc:postgresql://localhost/postgres
-    username: postgres
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: myuser
+    password: secret
   sql:
     init:
       mode: always

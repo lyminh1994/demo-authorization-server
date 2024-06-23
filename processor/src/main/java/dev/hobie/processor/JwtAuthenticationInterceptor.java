@@ -20,17 +20,15 @@ public class JwtAuthenticationInterceptor implements ChannelInterceptor {
   private final String headerName; // <2>
 
   @Override
-  public Message<?> preSend(Message<?> message, @NonNull MessageChannel channel) {
+  public Message<?> preSend(@NonNull Message<?> message, @NonNull MessageChannel channel) {
     var token = (String) message.getHeaders().get(headerName); // <3>
     Assert.hasText(token, "the token must be non-empty!");
 
-    var authentication =
-        this.authenticationProvider.authenticate(new BearerTokenAuthenticationToken(token)); // <4>
+    var authentication = this.authenticationProvider.authenticate(new BearerTokenAuthenticationToken(token)); // <4>
 
     if (authentication != null && authentication.isAuthenticated()) { // <5>
-      var upt =
-          UsernamePasswordAuthenticationToken.authenticated(
-              authentication.getName(), null, AuthorityUtils.NO_AUTHORITIES);
+      var upt = UsernamePasswordAuthenticationToken.authenticated(
+          authentication.getName(), null, AuthorityUtils.NO_AUTHORITIES);
       return MessageBuilder.fromMessage(message).setHeader(headerName, upt).build();
     }
 

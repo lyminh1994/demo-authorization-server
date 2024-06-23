@@ -12,18 +12,18 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 public class SecurityConfiguration {
 
   @Bean
-  public JwtAuthenticationProvider jwtAuthenticationProvider(JwtDecoder decoder) {
+  JwtAuthenticationProvider jwtAuthenticationProvider(JwtDecoder decoder) {
     return new JwtAuthenticationProvider(decoder);
   }
 
   @Bean
-  public JwtDecoder jwtDecoder(
+  JwtDecoder jwtDecoder(
       @Value("${spring.security.oauth2.authorizationserver.issuer}") String issuerUri) {
     return NimbusJwtDecoder.withIssuerLocation(issuerUri).build();
   }
 
   @Bean
-  public JwtAuthenticationConverter jwtAuthenticationConverter() {
+  JwtAuthenticationConverter jwtAuthenticationConverter() {
     return new JwtAuthenticationConverter();
   }
 }
