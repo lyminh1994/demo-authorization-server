@@ -1,8 +1,3 @@
-logging:
-  level:
-    root: info
-    web: debug
-    dev.hobie.gateway_service: debug
 server:
   port: 8082 # <1>
 spring:
@@ -21,3 +16,8 @@ spring:
             provider: spring
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             scope: user.read,openid
+logging:
+  level:
+    root: info
+    web: debug
+    dev.hobie.gateway_service: debug

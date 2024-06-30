@@ -1,14 +1,3 @@
-jwt:
-  key:
-    id: bootiful-key
-  persistence:
-    password: password
-    salt: 626F6F746966756C
-logging:
-  level:
-    root: debug
-    web: debug
-    dev.hobie.authorization_service: debug
 spring:
   codec:
     log-request-details: true
@@ -20,3 +9,15 @@ spring:
     init:
       mode: always
       schema-locations: classpath:sql/schema/*sql
+jwt:
+  key:
+    id: bootiful-key
+  persistence:
+    password: password
+    salt: 626F6F746966756C
+logging:
+  level:
+    root: info
+    web: debug
+    org.springframework.security: trace
+    dev.hobie.authorization_service: debug

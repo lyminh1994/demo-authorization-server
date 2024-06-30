@@ -49,7 +49,7 @@ Remember this code from the API we built earlier?
 
 [source,java]
 ----
-include::resource-service/src/main/java/dev/hobie/resourceservice/config/EmailRequestsIntegrationFlowConfig.java[]
+include::resource-service/src/main/java/dev/hobie/resource_service/config/EmailRequestsIntegrationFlowConfig.java[]
 ----
 
 It's a bean of type `IntegrationFlow`, from the Spring Integration project. The bean describes how we handle messages intended for a RabbitMQ broker: messages come, then we turn it into JSON, then we send it over AMQP. Simple.

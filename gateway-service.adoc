@@ -26,7 +26,7 @@ Let's look at the Java code first.
 
 [source,java]
 -----
-include::gateway-service/src/main/java/dev/hobie/gatewayservice/SecurityConfiguration.java[]
+include::gateway-service/src/main/java/dev/hobie/gateway_service/SecurityConfig.java[]
 -----
 
 <1> you could probably get away with not defining this bean at all _if_ you were willing to deal with default behavior of CSRF tokens, which I am not.
@@ -53,7 +53,7 @@ Finally, the request, after it has passed through any and all filters, is sent t
 
 [source,java]
 -----
-include::gateway-service/src/main/java/dev/hobie/gatewayservice/GatewayConfiguration.java[]
+include::gateway-service/src/main/java/dev/hobie/gateway_service/GatewayConfig.java[]
 -----
 
 <1> the first route matches all requests to `/api/**`, notes and forwards any OAuth JWTs to the backend service, and changes the path of the request from `gateway:8082/api/foo` to `api:8081/foo`, dropping the `/api/` bit.

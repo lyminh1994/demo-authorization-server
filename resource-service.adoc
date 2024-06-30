@@ -19,14 +19,14 @@ The domain's a trivial one: customer data, like a CRM (customer relationship man
 
 [source,java]
 -----
-include::resource-service/src/main/java/dev/hobie/resourceservice/model/Customer.java[]
+include::resource-service/src/main/java/dev/hobie/resource_service/model/Customer.java[]
 -----
 
 And of course there's a Spring Data JDBC repository to make working with that data easier...
 
 [source,java]
 -----
-include::resource-service/src/main/java/dev/hobie/resourceservice/repository/CustomerRepository.java[]
+include::resource-service/src/main/java/dev/hobie/resource_service/repository/CustomerRepository.java[]
 -----
 
 The Spring Data JDBC repository talks to a SQL table, called `customer`, whose definition we must specify.
@@ -47,7 +47,7 @@ And if we write data in a database but have no HTTP controller by which to exami
 
 [source,java]
 -----
-include::resource-service/src/main/java/dev/hobie/resourceservice/controller/CustomerController.java[]
+include::resource-service/src/main/java/dev/hobie/resource_service/controller/CustomerController.java[]
 -----
 
 Remember we're going to be securing this with Spring Security's OAuth support, and just to be sure everything's worked, we'll have a simple HTTP endpoint that injects and then spits out the current authenticated user's username, so you can see who the system thinks is authenticated at the moment.
@@ -56,7 +56,7 @@ This is particularly useful in the client, which is goign to want to at least ac
 
 [source,java]
 -----
-include::resource-service/src/main/java/dev/hobie/resourceservice/controller/MeController.java[]
+include::resource-service/src/main/java/dev/hobie/resource_service/controller/MeController.java[]
 -----
 
 And, finally, we've got a little integration that sends a message using the AMQP protocol via RabbitMQ to another service called `processor`.
@@ -80,7 +80,7 @@ We'll use that JWT later to validate the request is from a trusted, authenticate
 
 [source,java]
 -----
-include::resource-service/src/main/java/dev/hobie/resourceservice/controller/EmailController.java[]
+include::resource-service/src/main/java/dev/hobie/resource_service/controller/EmailController.java[]
 -----
 
 And there's a bit of Spring Integration plumbing to route those requests to our RabbitMQ broker running in a separate process.
@@ -88,7 +88,7 @@ This `IntegrationFlow` looks at requests (which come in the shape of a `Message<
 
 [source,java]
 -----
-include::resource-service/src/main/java/dev/hobie/resourceservice/config/EmailRequestsIntegrationFlowConfig.java[]
+include::resource-service/src/main/java/dev/hobie/resource_service/config/EmailRequestsIntegrationFlowConfig.java[]
 -----
 
 <1> inbound adapters translate events from the real world into Spring Framework `Message<T>` objects.
@@ -167,7 +167,7 @@ Here's the equivalent using ye ole `RestTemplate`:
 
 [source,java]
 ----
-include::resource-service/src/main/java/dev/hobie/resourceservice/util/ClientCredentialsUtils.java[]
+include::resource-service/src/main/java/dev/hobie/resource_service/util/ClientCredentialsUtils.java[]
 ----
 
 You can use this token to then issue a request to the HTTP server:

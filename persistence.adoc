@@ -84,7 +84,7 @@ Define a bean of type `PasswordEncoder` for use in your program.
 
 [source,java]
 -----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/SecurityConfiguration.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/SecurityConfiguration.java[]
 -----
 
 <1> this is a sort of compose `PasswordEncoder`, checking the prefix of the password string for information as to which encoder to use.
@@ -115,7 +115,7 @@ We could also define the users with SQL in a file under the `sql/data/` folder, 
 
 [source,java]
 -----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/UsersConfiguration.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/UsersConfiguration.java[]
 -----
 
 <1> this is a convenient pattern: define the prototype for all new users once and then reuse the builder
@@ -144,7 +144,7 @@ And here's the definition of the `RegisteredClientRepository` and a runner that 
 
 [source,java]
 -----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/ClientsConfiguration.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/ClientsConfiguration.java[]
 -----
 
 <1> register the `RegisteredClientRepository`
@@ -353,7 +353,7 @@ Mercifully, the Java Security APIs are pretty remarkable here.
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/Keys.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/Keys.java[]
 ----
 
 Easy!
@@ -362,7 +362,7 @@ It's a record to hold both the generate public and private keys.
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/RsaKeyPair.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/RsaKeyPair.java[]
 ----
 
 <1> No notes.
@@ -372,7 +372,7 @@ We're going to implement a repository to make working with, and persisting, `Rsa
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/RsaKeyPairRepository.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/RsaKeyPairRepository.java[]
 ----
 
 <1> find the key pairs and preserve ordering.
@@ -389,7 +389,7 @@ Here's the `RsaPrivateKeyConverter`:
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/RsaPrivateKeyConverter.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/RsaPrivateKeyConverter.java[]
 ----
 
 <1> serialization involves adding a header and footer to the content of the key and then serializing, but not before Base64 encoding the content of the key, and then passing it through a Spring Security `TextEncryptor`
@@ -401,7 +401,7 @@ We won't rehash it since its structure is basically identical to the `RsaPrivate
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/RsaPublicKeyConverter.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/RsaPublicKeyConverter.java[]
 ----
 
 We'll look at the configuration of the `TextEncryptor` used in both implementations in a bit.
@@ -411,14 +411,14 @@ I suppose I could've aded a `@Component` annotation to each of them, but instead
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/Converters.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/Converters.java[]
 ----
 
 Let's look at the repository implementation which will use JDBC.
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/JdbcRsaKeyPairRepository.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/JdbcRsaKeyPairRepository.java[]
 ----
 
 <1> in order to find the records we'll issue a query and pass in the  `RowMapper<RsaKeyPair>`, which is an instance of `RsaKeyPairRowMapper`, which we'll explore shortly.
@@ -429,7 +429,7 @@ We saw that the repository implementation uses a Spring JDBC `RowMapper<T>` inst
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/RsaKeyPairRowMapper.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/RsaKeyPairRowMapper.java[]
 ----
 
 <1> again, one of the nice things about this implementation is that most of the heavy lifting is in the converters.
@@ -443,7 +443,7 @@ We'll plug that OAuth2TokenCustomizer functionality in later.
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/RsaKeyPairRepositoryJWKSource.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/RsaKeyPairRepositoryJWKSource.java[]
 ----
 
 <1> when asked, we pass thrugh and return the list of `RsaKeyPair` instances from the database, turning them into `RSAKey.Builder` instances.
@@ -453,7 +453,7 @@ Let's see how all of this gets plugged into Spring Authorization Server through 
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/KeyConfiguration.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/KeyConfiguration.java[]
 ----
 
 <.> this is the `TextEncryptor` that's doing so much of the work for us in the converters we looked at earier.
@@ -482,7 +482,7 @@ Let's see that event wiring.
 
 [source,java]
 ----
-include::authorization-service/src/main/java/dev/hobie/authorizationservice/keys/LifecycleConfiguration.java[]
+include::authorization-service/src/main/java/dev/hobie/authorization_service/keys/LifecycleConfiguration.java[]
 ----
 
 <.> this `ApplicationListener` listens for the aforementioned event and writes a new `RsaKeyPair` to the repository, using the injeted `jwk.key.id`, whcih should be specified externally, and should remain constant. that is, after all, the key ID.
@@ -495,7 +495,7 @@ You can also delete the relevant configration in your `application.properties` o
 // == Federated OAuth
 // todo
 // see the example that shows how to use SAS as a federated OAuth service, so then when you authenticate with SAS, you can also authenticate with Google or Github or whatever
-// https://github.com/spring-projects/spring-authorization-service/tree/main/samples/demo-authorizationservice/src/main/java/sample/federation
+// https://github.com/spring-projects/spring-authorization-service/tree/main/samples/demo-authorization_service/src/main/java/sample/federation
 
 == To Production... and Beyond!
 
